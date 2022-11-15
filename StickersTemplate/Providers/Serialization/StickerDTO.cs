@@ -30,5 +30,11 @@ namespace StickersTemplate.Providers.Serialization
         /// </summary>
         [JsonProperty("keywords")]
         public string[] Keywords { get; set; }
+
+        /// <summary>
+        /// Gets or sets the userId.
+        /// </summary>
+        [JsonProperty("userId")]
+        public string UserId { get; set; }
     }
 }

@@ -62,8 +62,8 @@ namespace StickersTemplate.Providers
                     try
                     {
                         var responseContent = await response.Content.ReadAsStringAsync();
-                        var stickerConfig = JsonConvert.DeserializeObject<StickerConfigDTO>(responseContent);
-                        var stickers = stickerConfig?.Images?.Select(image => new Sticker(image.Name, new Uri(image.ImageUri), image.Keywords)).ToArray();
+                        var stickerConfig = JsonConvert.DeserializeObject<StickerConfigDTO>(responseContent);                        
+                        var stickers = stickerConfig?.Images?.Select(image => new Sticker(image.Name, image.UserId, new Uri(image.ImageUri), image.Keywords)).ToArray();
                         return new StickerSet("Stickers", stickers);
                     }
                     catch (JsonException e)

@@ -48,6 +48,8 @@ namespace StickersTemplate.Configuration.Providers
             this.RowKey = sticker.Id ?? Guid.NewGuid().ToString("D");
             this.ImageUrl = sticker.ImageUri?.AbsoluteUri;
             this.Name = sticker.Name;
+            this.UserId = sticker.UserId;
+            this.ModelName = sticker.ModelName;
             this.Keywords = string.Join(",", sticker.Keywords ?? Enumerable.Empty<string>());
             this.Index = sticker.Index;
             this.State = sticker.State.ToString();
@@ -62,6 +64,16 @@ namespace StickersTemplate.Configuration.Providers
         /// Gets or sets Name
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets UserId
+        /// </summary>
+        public string UserId { get; set; }
+
+        /// <summary>
+        /// Gets or sets ModelName
+        /// </summary>
+        public string ModelName { get; set; }
 
         /// <summary>
         /// Gets or sets Keywords
@@ -95,6 +107,8 @@ namespace StickersTemplate.Configuration.Providers
                 Id = this.RowKey,
                 ImageUri = !string.IsNullOrEmpty(this.ImageUrl) ? new Uri(this.ImageUrl) : null,
                 Name = this.Name,
+                UserId = this.UserId,
+                ModelName = this.ModelName,
                 Keywords = this.Keywords?.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries) ?? new string[0],
                 Index = this.Index,
                 State = stickerState,

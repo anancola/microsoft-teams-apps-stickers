@@ -7,6 +7,7 @@
 namespace StickersTemplate.Configuration.Controllers
 {
     using System;
+    using System.Collections.Generic;
     using System.Data;
     using System.IO;
     using System.Linq;
@@ -19,12 +20,13 @@ namespace StickersTemplate.Configuration.Controllers
     using Newtonsoft.Json;
     using StickersTemplate.Configuration.Models;
     using StickersTemplate.Configuration.Providers;
+    using StickersTemplate.Configuration.Providers.Replicate;
     using StickersTemplate.Configuration.Providers.Serialization;
 
     /// <summary>
     /// Stickers Controller
     /// </summary>
-    [Authorize]
+    // [Authorize]
     public class StickersController : Controller
     {
         private readonly IStickerStore stickerStore;
@@ -50,6 +52,113 @@ namespace StickersTemplate.Configuration.Controllers
             var activeStickers = stickers.Where(s => s.State == StickerState.Active);
             return this.View(activeStickers.Select(s => new StickerViewModel(s)));
         }
+        /// <summary>
+        /// GET: Stickers/Generate
+        /// </summary>
+        /// <returns>Action Result</returns>
+        public ActionResult Generate()
+        {
+            return this.View();
+        }
+        private string StreamToBase64Str(Stream fs, int contentLength)
+        {
+            byte[] thePictureAsBytes = new byte[contentLength];
+            using (BinaryReader theReader = new BinaryReader(fs))
+            {
+                thePictureAsBytes = theReader.ReadBytes(contentLength);
+            }
+            return Convert.ToBase64String(thePictureAsBytes);
+        }
+        /// <summary>
+        /// POST: Stickers/Create
+        /// To protect from overposting attacks, please enable the specific properties you want to bind to, for
+        /// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        /// </summary>
+        /// <param name="stickerViewModel">Sticker View Model</param>
+        /// <returns>Task Action Result</returns>
+        [HttpPost]
+        // [AllowAnonymous]
+        // [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Generate([Bind(Include = "File,Name,Keywords,UserId,ModelName")] StickerViewModel stickerViewModel)
+        {
+            if (this.ModelState.IsValid)
+            {
+                string id = "";
+                Uri imageUri;
+                string fileurl = "";
+
+                // Call the Mars API to generate the avatar
+                Stream fs = stickerViewModel.File.InputStream;
+                string thePictureDataAsString = StreamToBase64Str(fs, stickerViewModel.File.ContentLength);
+                var extension = stickerViewModel.File.ContentType;
+                if (stickerViewModel.File.ContentType.Contains('/'))
+                {
+                    extension = stickerViewModel.File.ContentType.Split('/')[1];
+                }
+                AvatarDTO dto = new AvatarDTO
+                {
+                    user = stickerViewModel.UserId,
+                    type = extension,
+                    file = "data:" + stickerViewModel.File.ContentType + ";base64," + thePictureDataAsString,
+                };
+
+                // Reset the input stream to read again
+
+                try
+                {
+                    // var originStream = new MemoryStream(Convert.FromBase64String(thePictureDataAsString));
+                    // using (var memoryStream = new MemoryStream())
+                    // {
+                    //     ImageBuilder.Current.Build(originStream, memoryStream, new ResizeSettings($"maxwidth={Sticker.MaximumDimensionInPixels}&maxheight={Sticker.MaximumDimensionInPixels}"));
+                    //     memoryStream.Seek(0, SeekOrigin.Begin);
+                    //     // Resize image
+                    //     thePictureDataAsString = StreamToBase64Str(memoryStream, stickerViewModel.File.ContentLength);
+                    // }
+
+                    // Integrate with Replicate api
+                    id = ReplicateProvider.Generate(stickerViewModel.ModelName, "data:" + stickerViewModel.File.ContentType + ";base64," + thePictureDataAsString);
+                    fileurl = ReplicateProvider.GetImage(id);
+
+                    // Download image from fileurl
+                    using (WebClient webClient = new WebClient())
+                    {
+                        byte[] data = webClient.DownloadData(fileurl);
+                        using (MemoryStream mem = new MemoryStream(data))
+                        {                            
+                            imageUri = await this.blobStore.UploadBlobAsync(id, mem);
+                        }
+
+                    }
+
+                }
+                catch (Exception e)
+                {
+                    throw new Exception($"Error: {stickerViewModel.ModelName}, Exception: " + e.ToString());
+                }
+
+                try
+                {
+                    await this.stickerStore.CreateStickerAsync(new Sticker
+                    {
+                        Id = id,
+                        ImageUri = imageUri,
+                        Name = stickerViewModel.Name,
+                        UserId = stickerViewModel.UserId,
+                        ModelName = stickerViewModel.ModelName,
+                        Keywords = stickerViewModel?.GetKeywordsList(),
+                        State = StickerState.Active,
+                    });
+                }
+                catch (Exception e)
+                {
+                    throw new Exception($"Error: {stickerViewModel.ModelName}, Exception: " + e.ToString());
+                }
+
+                return this.RedirectToAction("Index");
+            }
+
+            return this.View(stickerViewModel);
+        }
 
         /// <summary>
         /// GET: Stickers/Create
@@ -68,8 +177,9 @@ namespace StickersTemplate.Configuration.Controllers
         /// <param name="stickerViewModel">Sticker View Model</param>
         /// <returns>Task Action Result</returns>
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "File,Name,Keywords")] StickerViewModel stickerViewModel)
+        // [AllowAnonymous]
+        // [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create([Bind(Include = "File,Name,Keywords,UserId")] StickerViewModel stickerViewModel)
         {
             if (this.ModelState.IsValid)
             {
@@ -90,6 +200,7 @@ namespace StickersTemplate.Configuration.Controllers
                     Id = id,
                     ImageUri = imageUri,
                     Name = stickerViewModel.Name,
+                    UserId = stickerViewModel.UserId,
                     Keywords = stickerViewModel?.GetKeywordsList(),
                     State = StickerState.Active,
                 });
@@ -129,14 +240,15 @@ namespace StickersTemplate.Configuration.Controllers
         /// <param name="stickerViewModel">Sticker View Model</param>
         /// <returns>Task Action Result</returns>
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Name,Keywords")] StickerViewModel stickerViewModel)
+        // [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Name,Keywords,UserId")] StickerViewModel stickerViewModel)
         {
             if (this.ModelState.IsValid)
             {
                 Sticker sticker = await this.stickerStore.GetStickerAsync(stickerViewModel.Id);
 
                 sticker.Name = stickerViewModel.Name;
+                sticker.UserId = stickerViewModel.UserId;
                 sticker.Keywords = stickerViewModel?.GetKeywordsList();
                 await this.stickerStore.UpdateStickerAsync(sticker);
 
@@ -174,7 +286,7 @@ namespace StickersTemplate.Configuration.Controllers
         /// <returns>Task Action Result</returns>
         [HttpPost]
         [ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+        // [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(string id)
         {
             if (id == null)
@@ -201,7 +313,7 @@ namespace StickersTemplate.Configuration.Controllers
         /// <returns>Task Action Result</returns>
         [HttpPost]
         [ActionName("DeletePermanently")]
-        [ValidateAntiForgeryToken]
+        // [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeletePermanentlyConfirmed(string id)
         {
             if (id == null)
@@ -219,7 +331,7 @@ namespace StickersTemplate.Configuration.Controllers
         /// </summary>
         /// <returns>Task Action Result</returns>
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        // [ValidateAntiForgeryToken]
         public async Task<ActionResult> Publish()
         {
             var stickers = await this.stickerStore.GetStickersAsync();
@@ -232,6 +344,7 @@ namespace StickersTemplate.Configuration.Controllers
                     {
                         ImageUri = s.ImageUri.AbsoluteUri,
                         Name = s.Name,
+                        UserId = s.UserId,
                         Keywords = s.Keywords.ToArray(),
                     })
                     .ToArray()

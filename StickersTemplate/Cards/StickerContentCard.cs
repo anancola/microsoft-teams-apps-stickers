@@ -42,7 +42,7 @@ namespace StickersTemplate.Cards
                 {
                     new AdaptiveImage
                     {
-                        HorizontalAlignment = AdaptiveHorizontalAlignment.Center,
+                        HorizontalAlignment = AdaptiveHorizontalAlignment.Left,
                         Url = this.sticker.ImageUri,
                         AltText = this.sticker.Name
                     }

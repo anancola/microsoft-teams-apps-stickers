@@ -1,11 +1,22 @@
-# Custom Stickers App Template
+## Get started
 
-| [Documentation](https://github.com/OfficeDev/microsoft-teams-stickers-app/wiki) | [Deployment guide](https://github.com/OfficeDev/microsoft-teams-stickers-app/wiki/Deployment-guide) | [Architecture](https://github.com/OfficeDev/microsoft-teams-stickers-app/wiki/Solution-overview) |
-| ---- | ---- | ---- |
+The code is created for fun. If you would like to publish to production level, there is still lots of works to do.
 
-Self-expression is core to Teams culture. This app template is a messaging extension that enables your users to share custom stickers and GIFs within the Teams chat experience. This template provides an easy web-based configuration experience where authorized users can upload and manage the GIFs/stickers/images returned by the app.
+When you're ready to try out Custom Stickers, or to use it in your own organization, follow the steps in the [Deployment guide](https://github.com/OfficeDev/microsoft-teams-stickers-app/wiki/Deployment-guide).
 
-![Custom stickers in action](https://github.com/OfficeDev/microsoft-teams-stickers-app/wiki/images/CustomStickers.gif)
+## The model services
+
+[Comics 1](https://replicate.com/netease-gameai/spatchgan-selfie2anime)
+
+[Comics 2](https://replicate.com/minivision-ai/photo2cartoon)
+
+[Others](https://replicate.com/rinongal/stylegan-nada)
+
+![Custom stickers in action](/sample.png)
+
+## The Teams App is forked from the source
+
+[microsoft-teams-apps-stickers](https://github.com/OfficeDev/microsoft-teams-apps-stickers.git)
 
 ## Legal notice
 
@@ -22,29 +33,3 @@ This app template is provided under the [MIT License](https://github.com/OfficeD
 - If the app template enables access to any Microsoft Internet-based services (e.g., Office365), use of those services will be subject to the separately-provided terms of use. In such cases, Microsoft may collect telemetry data related to app template usage and operation. Use and handling of telemetry data will be performed in accordance with such terms of use.
 
 - Use of this template does not guarantee acceptance of your app to the Teams app store. To make this app available in the Teams app store, you will have to comply with the [submission and validation process](https://docs.microsoft.com/en-us/microsoftteams/platform/concepts/deploy-and-publish/appsource/publish), and all associated requirements such as including your own privacy statement and terms of use for your app.
-
-## Get started
-
-Begin with the [Solution overview](https://github.com/OfficeDev/microsoft-teams-stickers-app/wiki/Solution-overview) to read about what the app does and how it works.
-
-When you're ready to try out Custom Stickers, or to use it in your own organization, follow the steps in the [Deployment guide](https://github.com/OfficeDev/microsoft-teams-stickers-app/wiki/Deployment-guide).
-
-## Feedback
-
-Thoughts? Questions? Ideas? Share them with us on [Teams UserVoice](https://microsoftteams.uservoice.com/forums/555103-public)!
-
-Please report bugs and other code issues [here](https://github.com/OfficeDev/microsoft-teams-stickers-app/issues/new).
-
-## Contributing
-
-This project welcomes contributions and suggestions.  Most contributions require you to agree to a
-Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
-the rights to use your contribution. For details, visit https://cla.microsoft.com.
-
-When you submit a pull request, a CLA-bot will automatically determine whether you need to provide
-a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions
-provided by the bot. You will only need to do this once across all repos using our CLA.
-
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
-For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
-contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.

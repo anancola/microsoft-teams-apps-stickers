@@ -19,6 +19,8 @@ namespace StickersTemplate.Configuration.Models
     {
         private string name;
 
+        private string userId;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="StickerViewModel"/> class.
         /// </summary>
@@ -32,12 +34,23 @@ namespace StickersTemplate.Configuration.Models
         /// <param name="sticker">Sticker</param>
         public StickerViewModel(Sticker sticker)
         {
+            this.UserId = sticker.UserId;
             this.Id = sticker.Id;
             this.ImageUri = sticker.ImageUri;
             this.Name = sticker.Name;
+            this.ModelName = sticker.ModelName;
             this.Keywords = string.Join(", ", sticker.Keywords ?? Enumerable.Empty<string>());
             this.Index = sticker.Index;
             this.State = sticker.State;
+        }
+
+        /// <summary>
+        /// Gets or sets Id
+        /// </summary>
+        public string UserId 
+        {
+            get { return this.userId; }
+            set { this.userId = value?.Trim(); }
         }
 
         /// <summary>
@@ -66,6 +79,11 @@ namespace StickersTemplate.Configuration.Models
         public string Keywords { get; set; }
 
         /// <summary>
+        /// Gets or sets ModelName
+        /// </summary>
+        public string ModelName { get; set; }
+
+        /// <summary>
         /// Gets or sets Index
         /// </summary>
         public int Index { get; set; }
@@ -74,7 +92,7 @@ namespace StickersTemplate.Configuration.Models
         /// Gets or sets State
         /// </summary>
         public StickerState State { get; set; }
-
+        
         /// <summary>
         /// Gets or sets File
         /// </summary>

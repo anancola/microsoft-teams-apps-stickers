@@ -20,6 +20,11 @@ namespace StickersTemplate.Configuration.Models
         public const int MaximumDimensionInPixels = 640;
 
         /// <summary>
+        /// Gets or sets UserId
+        /// </summary>
+        public string UserId { get; set; }
+
+        /// <summary>
         /// Gets or sets Id
         /// </summary>
         public string Id { get; set; }
@@ -33,6 +38,11 @@ namespace StickersTemplate.Configuration.Models
         /// Gets or sets Name
         /// </summary>
         public string Name { get; set; }
+        
+        /// <summary>
+        /// Gets or sets ModelName
+        /// </summary>
+        public string ModelName { get; set; }
 
         /// <summary>
         /// Gets or sets Keywords

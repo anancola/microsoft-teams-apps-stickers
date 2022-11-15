@@ -30,5 +30,11 @@ namespace StickersTemplate.Configuration.Providers.Serialization
         /// </summary>
         [JsonProperty("keywords")]
         public string[] Keywords { get; set; }
+
+        /// <summary>
+        /// Gets or sets the image uri.
+        /// </summary>
+        [JsonProperty("userId")]
+        public string UserId { get; set; }
     }
 }

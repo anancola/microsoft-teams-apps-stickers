@@ -23,39 +23,39 @@
         "dist/js/bootstrap.js",
         "dist/js/bootstrap.min.js"
       ]
-    },
-    {
-      "provider": "cdnjs",
-      "library": "jquery@3.3.1",
-      "destination": "lib/jquery/",
-      "files": [
-        "jquery.min.js",
-        "jquery.js",
-        "jquery.min.map"
-      ]
-    },
-    {
-      "provider": "cdnjs",
-      "library": "jquery-validation-unobtrusive@3.2.11",
-      "destination": "lib/jquery-validation-unobtrusive/"
-    },
-    {
-      "provider": "cdnjs",
-      "library": "jquery-validate@1.19.0",
-      "destination": "lib/jquery-validate/",
-      "files": [
-        "jquery.validate.min.js",
-        "jquery.validate.js"
-      ]
-    },
-    {
-      "provider": "cdnjs",
-      "library": "modernizr@2.8.3",
-      "destination": "lib/modernizr/",
-      "files": [
-        "modernizr.min.js",
-        "modernizr.js"
-      ]
-    }
+    }//,
+    // {
+    //   "provider": "cdnjs",
+    //   "library": "jquery@3.3.1",
+    //   "destination": "lib/jquery/",
+    //   "files": [
+    //     "jquery.min.js",
+    //     "jquery.js",
+    //     "jquery.min.map"
+    //   ]
+    // },
+    // {
+    //   "provider": "cdnjs",
+    //   "library": "jquery-validation-unobtrusive@3.2.11",
+    //   "destination": "lib/jquery-validation-unobtrusive/"
+    // },
+    // {
+    //   "provider": "cdnjs",
+    //   "library": "jquery-validate@1.19.0",
+    //   "destination": "lib/jquery-validate/",
+    //   "files": [
+    //     "jquery.validate.min.js",
+    //     "jquery.validate.js"
+    //   ]
+    // },
+    // {
+    //   "provider": "cdnjs",
+    //   "library": "modernizr@2.8.3",
+    //   "destination": "lib/modernizr/",
+    //   "files": [
+    //     "modernizr.min.js",
+    //     "modernizr.js"
+    //   ]
+    // }
   ]
 }

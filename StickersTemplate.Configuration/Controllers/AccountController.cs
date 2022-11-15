@@ -8,9 +8,9 @@ namespace StickersTemplate.Configuration.Controllers
 {
     using System.Web;
     using System.Web.Mvc;
-    using Microsoft.Owin.Security;
-    using Microsoft.Owin.Security.Cookies;
-    using Microsoft.Owin.Security.OpenIdConnect;
+    // using Microsoft.Owin.Security;
+    // using Microsoft.Owin.Security.Cookies;
+    // using Microsoft.Owin.Security.OpenIdConnect;
 
     /// <summary>
     /// Account Controller
@@ -23,12 +23,12 @@ namespace StickersTemplate.Configuration.Controllers
         public void SignIn()
         {
             // Send an OpenID Connect sign-in request.
-            if (!this.Request.IsAuthenticated)
-            {
-                this.HttpContext.GetOwinContext().Authentication.Challenge(
-                    new AuthenticationProperties { RedirectUri = "/" },
-                    OpenIdConnectAuthenticationDefaults.AuthenticationType);
-            }
+            // if (!this.Request.IsAuthenticated)
+            // {
+            //     this.HttpContext.GetOwinContext().Authentication.Challenge(
+            //         new AuthenticationProperties { RedirectUri = "/" },
+            //         OpenIdConnectAuthenticationDefaults.AuthenticationType);
+            // }
         }
 
         /// <summary>
@@ -36,12 +36,12 @@ namespace StickersTemplate.Configuration.Controllers
         /// </summary>
         public void SignOut()
         {
-            string callbackUrl = this.Url.Action("SignOutCallback", "Account", routeValues: null, protocol: this.Request.Url.Scheme);
+            // string callbackUrl = this.Url.Action("SignOutCallback", "Account", routeValues: null, protocol: this.Request.Url.Scheme);
 
-            this.HttpContext.GetOwinContext().Authentication.SignOut(
-                new AuthenticationProperties { RedirectUri = callbackUrl },
-                OpenIdConnectAuthenticationDefaults.AuthenticationType,
-                CookieAuthenticationDefaults.AuthenticationType);
+            // this.HttpContext.GetOwinContext().Authentication.SignOut(
+            //     new AuthenticationProperties { RedirectUri = callbackUrl },
+            //     OpenIdConnectAuthenticationDefaults.AuthenticationType,
+            //     CookieAuthenticationDefaults.AuthenticationType);
         }
 
         /// <summary>
@@ -50,11 +50,11 @@ namespace StickersTemplate.Configuration.Controllers
         /// <returns>Action Result</returns>
         public ActionResult SignOutCallback()
         {
-            if (this.Request.IsAuthenticated)
-            {
-                // Redirect to home page if the user is authenticated.
-                return this.RedirectToAction("Index", "Stickers");
-            }
+            // if (this.Request.IsAuthenticated)
+            // {
+            //     // Redirect to home page if the user is authenticated.
+            //     return this.RedirectToAction("Index", "Stickers");
+            // }
 
             return this.View();
         }
@@ -66,8 +66,8 @@ namespace StickersTemplate.Configuration.Controllers
         /// <returns>Action Result</returns>
         public ActionResult InvalidUser(string upn)
         {
-            this.ViewBag.Upn = upn;
-            this.HttpContext.GetOwinContext().Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
+            // this.ViewBag.Upn = upn;
+            // this.HttpContext.GetOwinContext().Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
             return this.View();
         }
     }

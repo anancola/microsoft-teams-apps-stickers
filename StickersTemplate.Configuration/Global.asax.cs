@@ -6,6 +6,8 @@
 
 namespace StickersTemplate.Configuration
 {
+    using System;
+    using System.Web.Helpers;
     using System.Web.Mvc;
     using System.Web.Optimization;
     using System.Web.Routing;
@@ -21,11 +23,16 @@ namespace StickersTemplate.Configuration
         /// Application Start
         /// </summary>
         protected void Application_Start()
-        {
+        {            
+            // AntiForgeryConfig.RequireSsl = false;
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+        }
+        private void Application_EndRequest(object sender, EventArgs e)
+        {
+            Response.Headers["X-FRAME-OPTIONS"] = string.Empty;
         }
     }
 }

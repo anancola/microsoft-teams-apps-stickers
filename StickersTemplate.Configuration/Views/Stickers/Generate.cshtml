@@ -1,13 +1,27 @@
 ﻿@model StickersTemplate.Configuration.Models.StickerViewModel
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Generate";
+
+    var selectList = new SelectList(
+        new List<SelectListItem>
+        {
+            new SelectListItem {Text = "Comics 1", Value = "comics1"},
+            new SelectListItem {Text = "Comics 2", Value = "comics2"},
+            new SelectListItem {Text = "Anime", Value = "anime"},
+            new SelectListItem {Text = "Pixar", Value = "pixar"},
+            new SelectListItem {Text = "Amedeo Modigliani", Value = "modigliani"},
+            new SelectListItem {Text = "Cartoon Shrek", Value = "shrek"},
+            new SelectListItem {Text = "Mona Lisa", Value = "mona_lisa"},
+            new SelectListItem {Text = "Scary Joker", Value = "joker"},
+            new SelectListItem {Text = "The Witcher", Value = "witcher"},
+        }, "Value", "Text");
 }
 
-<h4>Create Sticker</h4>
+<h3>Generate Avatar Stickers</h3>
 
 
-@using (Html.BeginForm("Create", "Stickers", FormMethod.Post, new { enctype = "multipart/form-data" })) 
+@using (Html.BeginForm("Generate", "Stickers", FormMethod.Post, new { enctype = "multipart/form-data" })) 
 {
     @Html.AntiForgeryToken()
     <div class="form-horizontal">
@@ -15,7 +29,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.UserId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.UserId, new { htmlAttributes = new { @class = "form-control", @id = "txtUser" } })
+                @Html.EditorFor(model => model.UserId, new { htmlAttributes = new { @class = "form-control", @id = "txtUserId" } })
                 @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -37,7 +51,7 @@
                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
             </div>
         </div>
-
+        
         <div class="form-group">
             @Html.LabelFor(model => model.Keywords, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -45,11 +59,18 @@
                 <div class="small text-muted">Enter relevant search terms, separated by commas or spaces.</div>
                 @Html.ValidationMessageFor(model => model.Keywords, "", new { @class = "text-danger" })
             </div>
-        </div>        
+        </div>  
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ModelName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">         
+                @Html.DropDownListFor(model => model.ModelName, selectList, "Select a model", new { @class = "form-control" })
+            </div>
+        </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input id="btnSave" type="submit" value="Add sticker" class="btn btn-default" disabled />
+                <input id="btnSave" type="submit" value="Generate avatar" class="btn btn-default" disabled />
             </div>
         </div>
     </div>

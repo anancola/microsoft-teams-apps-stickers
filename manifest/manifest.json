@@ -1,48 +1,70 @@
 {
-    "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.3/MicrosoftTeams.schema.json",
-    "manifestVersion": "1.3",
+    "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.14/MicrosoftTeams.schema.json",
     "version": "1.0.0",
-    "id": "f1bc95ac-b991-4cd0-9ce5-7e4a70f4339b",
-    "packageName": "com.microsoft.teams.stickers",
-    "developer": {
-        "name": "<company name>",
-        "websiteUrl": "<website url>",
-        "privacyUrl": "<privacy url>",
-        "termsOfUseUrl": "<terms of use url>"
+    "manifestVersion": "1.14",
+    "id": "e0227e03-3e0d-4b0b-ad0d-faa6ff3fd87f",
+    "packageName": "com.package.name",
+    "name":{
+        "short": "<app-name>",
+        "full": "Microsoft Teams Action Based Messaging Extension"
     },
-    "icons": {
+    "developer":{
+        "name": "<name>",    
+        "websiteUrl": "<websiteUrl>",
+        "privacyUrl": "<privacyUrl>",
+        "termsOfUseUrl": "<termsOfUseUrl>",
+        "mpnId": ""
+    },
+    "description":{
+        "short": "<description>",
+        "full": "<description>"
+    },
+    "icons":{
         "color": "color.png",
         "outline": "outline.png"
     },
-    "name": {
-        "short": "Stickers!"
-    },
-    "description": {
-        "short": "The awesome Stickers app enhances messaging in Microsoft Teams!",
-        "full": "The awesome Stickers app comes to enhance your Microsoft Teams messaging experience with a new and amazing palette of stickers!"
-    },
     "accentColor": "#FFFFFF",
+    "staticTabs": [
+        {
+          "entityId": "951d715f-fb9a-4f1c-b557-e53feda8d7e5",
+          "name": "Home",
+          "contentUrl": "https://<config-web-name>.azurewebsites.net",
+          "scopes": [
+            "personal"
+          ]
+        },
+        {
+          "entityId": "about",
+          "scopes": [
+            "personal"
+          ]
+        }
+    ],
     "composeExtensions": [
         {
-            "botId": "<bot id>",
-            "canUpdateConfiguration": false,
-            "commands": [
+            "botId": "f6091508-2a8e-4a9f-9fe3-ab9ad1650a2d",
+            "canUpdateConfiguration":false,
+            "commands":[
                 {
                     "id": "Search",
                     "title": "Search",
                     "description": "",
-                    "initialRun": true,
-                    "parameters": [
+                    "initialRun":true,
+                    "parameters":[
                         {
                             "name": "keyword",
                             "title": "keyword",
-                            "description": "search for a sticker"
+                            "description": "search for a sticker",
+                            "inputType": "text"
                         }
                     ]
                 }
             ]
         }
     ],
-    "permissions": [],
-    "validDomains": []
+    "validDomains": [],
+    "webApplicationInfo":{
+        "id": "f6091508-2a8e-4a9f-9fe3-ab9ad1650a2d",
+        "resource": ""
+    }
 }
