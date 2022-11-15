@@ -4,6 +4,13 @@ The code is created for fun. If you would like to publish to production level, t
 
 When you're ready to try out Custom Stickers, or to use it in your own organization, follow the steps in the [Deployment guide](https://github.com/OfficeDev/microsoft-teams-stickers-app/wiki/Deployment-guide).
 
+## Demo
+Generate avatars  
+![Generate avatar](/media/generate-sticker.gif)
+
+Send stickers  
+![Send stickers](/media/send-sticker.gif)
+
 ## The model services
 
 [Comics 1](https://replicate.com/netease-gameai/spatchgan-selfie2anime)
@@ -12,7 +19,7 @@ When you're ready to try out Custom Stickers, or to use it in your own organizat
 
 [Others](https://replicate.com/rinongal/stylegan-nada)
 
-![Custom stickers in action](/sample.png)
+![Custom stickers in action](/media/sample.png)
 
 ## The Teams App is forked from the source
 
